@@ -11,10 +11,6 @@
             margin: 0;
         }
 
-        *:focus {
-            outline: none;
-        }
-
         :root {
             --bg-color: white;
             --color: black;
@@ -117,7 +113,7 @@
             border-radius: 5px;
         }
 
-        input:not(:is([type=radio], [type=checkbox])):hover {
+        input:not(:is([type=radio], [type=checkbox])):hover, input:not([type=radio]):invalid {
             background-color: var(--color-hover-input);
         }
 
@@ -200,6 +196,20 @@
         input[type=radio]:checked::after {
             transform: translate(25%, 25%) scale(1);
             transition: all 0.3s cubic-bezier(0.25, 0.25, 0.56, 2);
+        }
+
+        input[type=radio]:indeterminate {
+            animation: radio 0.5s ease-in infinite alternate;
+        }
+
+        @keyframes radio {
+            from {
+                border: 2px solid var(--radio-invalid);
+            }
+
+            to {
+                border: 5px solid var(--radio-invalid);
+            }
         }
 
         input[type=checkbox] {
@@ -290,7 +300,7 @@
                 <ul>
                     <li>
                         <label for="male">Male</label>
-                        <input type="radio" name="sex" id="male" checked>
+                        <input type="radio" name="sex" id="male" required>
                     </li>
                     <li>
                         <label for="female">Female</label>
