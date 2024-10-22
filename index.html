@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        :root {
+            --bg-color: white;
+            --color: black;
+            --radio-invalid: red;
+            --correct: green;
+            --bg-color-input: white;
+            --bg-color-btn: #eee;
+            --color-hover-input: beige;
+            --color-focus-border: goldenrod;
+            --color-inner-shadow: #888;
+            --color-border-light: #555;
+            --color-border-strong: #222;
+            --color-span-out-of-range: white;
+            background-color: var(--bg-color);
+            color: var(--color);
+        }
+
+        form {
+            width: 600px;
+            padding: 1em;
+            border: 2px solid var(--color-border-light);
+            box-shadow: inset 1px 1px 2px var(--color-inner-shadow);
+            margin: 0 auto;
+            line-height: 1.5em;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            letter-spacing: .05em;
+        }
+
+        fieldset {
+            padding: 2em;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+        }
+
+        legend {
+            color: var(--bg-color);
+            background-color: var(--color);
+            padding: .5em;
+            border-radius: 5px;
+        }
+
+        fieldset div {
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        label, input {
+            display: block;
+            width: 100%;
+        }
+
+        input {
+            appearance: none;
+            background-color: var(--bg-color-input);
+            border: 2px solid var(--color-border-strong);
+            color: var(--color);
+        }
+
+        span {
+            position: relative; 
+        }
+
+        input:required + span::before {
+            content: "Required";
+            position: absolute;
+            padding: 0.2em;
+            background-color: var(--color);
+            color: var(--bg-color);
+            right: 0;
+            top: -32px;
+            border-radius: 5px;
+        }
+
+        input#age:out-of-range + span::before {
+            content: "the age must be greater than 12";
+            width: max-content;
+            background-color: var(--radio-invalid);
+            color: var(--color-span-out-of-range);
+        }
+
+        input:invalid + span::after {
+            content: "✖";
+            position: absolute;
+            color: var(--radio-invalid);
+            left: 0.2em;
+        }
+
+        input:valid + span::after {
+            content: "✓";
+            position: absolute;
+            color: var(--correct);
+            left: 0.2em;
+        }
+
+        input:not(:is([type=radio], [type=checkbox])) {
+            height: 2em;
+            box-shadow: inset 1px 1px 2px var(--color-inner-shadow);
+            border-radius: 5px;
+        }
+
+        input:not(:is([type=radio], [type=checkbox])):hover {
+            background-color: var(--color-hover-input);
+        }
+
+        span::after {
+            font-size: 1.5em;
+        }
+        button, label:has(+ #file) {
+            border: 2px solid var(--color-border-strong);
+            color: var(--color);
+            box-shadow: inset 1px 1px 2px var(--color-inner-shadow);
+            background-color: var(--bg-color-btn);
+            margin: 0 auto;
+            appearance: none;
+            padding: 0.2em;
+            font-size: 1.2em;
+            border-radius: 5px;
+        }
+
+        label:has(+ #file) {
+            width: 15em;
+            text-align: center;
+        }
+
+        button:hover, label:has(+ #file):hover, #dark-theme:hover, input[type=radio], input[type=checkbox] {
+            box-shadow: inset -1px -1px 2px var(--color-inner-shadow);
+            cursor: pointer;
+        }
+
+        button:active, label:has(+ #file):active {
+            transform: translateY(5%);
+            transition: all 0.2s ease-in;
+        }
+
+        input:focus, button:focus {
+            border: 2px solid var(--color-focus-border);
+        }
+
+        input[type=file] {
+            display: none;
+        }
+        
+        div:has(h3,ul), ul {
+            display: flex;
+            flex-flow: row wrap;
+            text-align: center;
+            width: 100%;
+        }
+        
+        h3 {
+            display: block;
+            width: 100%;
+        }
+
+        li {
+            flex: auto;
+            display: block;
+        }
+        
+        input[type=radio] {
+            margin: 0 auto;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--color-border-light);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        input[type=radio]::after {
+            content: " ";
+            width: 12px;
+            height: 12px;
+            background-color: var(--radio-invalid);
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(25%, 25%) scale(0);
+            transform-origin: center;
+            transition: all 0.3s ease-in;
+        }
+
+        input[type=radio]:checked::after {
+            transform: translate(25%, 25%) scale(1);
+            transition: all 0.3s cubic-bezier(0.25, 0.25, 0.56, 2);
+        }
+
+        input[type=checkbox] {
+            margin: 0 auto;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--color-border-light);
+            border-radius: 5%;
+            position: relative;
+        }
+
+        input[type=checkbox]:checked::after {
+            position: absolute;
+            content: "✔";
+            color: var(--correct);
+            font-size: 1.5em;
+        }
+
+        input:disabled {
+            background-color: var(--bg-color-input);
+            border: 1px solid var(--color-border-light);
+        }
+
+        #dark-theme {
+            width: 4em;
+            height: 2em;
+            border-radius: 15px;
+            border: 2px solid var(--color-border-strong);
+            background-color: var(--bg-color-input);
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            box-shadow: inset 1px 1px 2px var(--color-inner-shadow);
+        }
+
+        #dark-theme::after {
+            position: absolute;
+            content: " ";
+            height: 90%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background-color: var(--color);
+            transform: translate(10%, 5%);
+            transition: transform 0.2s ease-in;
+        }
+
+        #dark-theme:checked::after {
+            transform: translate(130%, 5%);
+        }
+
+        :root:has(div):has(#dark-theme:checked) {
+            --bg-color: #222;
+            --color: white;
+            --radio-invalid: blue;
+            --correct: yellow;
+            --bg-color-input: #333;
+            --bg-color-btn: #777;
+            --color-hover-input: #555;
+            --color-focus-border: #ccc;
+            --color-inner-shadow: #bbb;
+            --color-border-light: #555;
+            --color-border-strong: #999;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <fieldset>
+            <legend>Feedback form</legend>
+            <h2>Required fields are labelled with "required"</h2>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="user-name" required>
+                <span></span>
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" name="user-age" id="age" min="12" max="120" required>
+                <span></span>
+            </div>
+            <div>
+                <label for="mail">Email Address (include if you want a response):</label>
+                <input type="email" name="user-name" id="mail">
+                <span></span>
+            </div>
+            <div>
+                <h3>Sex</h3>
+                <ul>
+                    <li>
+                        <label for="male">Male</label>
+                        <input type="radio" name="sex" id="male" checked>
+                    </li>
+                    <li>
+                        <label for="female">Female</label>
+                        <input type="radio" name="sex" id="female">
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <label for="file" tabindex="0">Select a file</label>
+                <input type="file" id="file" name="file-user">
+            </div>
+            <div>
+                <h3>Hobbies</h3>
+                <ul>
+                    <li>
+                        <label for="cook">Cook</label>
+                        <input type="checkbox" name="hobbies" id="cook">
+                    </li>
+                    <li>
+                        <label for="running">Running</label>
+                        <input type="checkbox" name="hobbies" id="running">
+                    </li>
+                    <li>
+                        <label for="read">Read</label>
+                        <input type="checkbox" name="hobbies" id="read">
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <button>Send</button>
+            </div>
+        </fieldset>
+    </form>
+    <div>
+        <input id="dark-theme" type="checkbox">
+    </div>
+</body>
+</html>
